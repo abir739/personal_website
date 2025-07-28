@@ -5,6 +5,10 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:parallax_animation/parallax_animation.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'pdf_view_page.dart';
+
+// Web-specific imports
+import 'dart:html' as html;
 
 class PortfolioHomePage extends StatefulWidget {
   const PortfolioHomePage({super.key});
@@ -47,28 +51,49 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   }
 
   void _downloadCV() async {
-    const String cvUrl =
-        'https://abir739.github.io/personal_website/assets/assets/pdf/Abir_Cherif_CV_2025.pdf';
-    await _launchUrl(cvUrl, context);
-    // if (kIsWeb) {
-    //   // For web, try to trigger download using html
-    //   try {
-    //     html.AnchorElement(href: cvUrl)
-    //       ..setAttribute('download', 'Abir_Cherif_CV_2025.pdf')
-    //       ..click();
-    //   } catch (e) {
-    //     // Fallback to opening in new tab
-    //     await _launchUrl(cvUrl, context);
-    //   }
-    // } else {
-    //   await _launchUrl(cvUrl, context);
-    // }
+    if (kIsWeb) {
+      // For web deployment, use the correct GitHub Pages URL
+      const String cvUrl =
+          'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf';
+
+      try {
+        // Try to trigger download using html
+        final anchor = html.AnchorElement(href: cvUrl)
+          ..setAttribute('download', 'Abir_Cherif_CV_2025.pdf')
+          ..click();
+      } catch (e) {
+        // Fallback to opening in new tab
+        await _launchUrl(cvUrl, context);
+      }
+    } else {
+      // For mobile, use the asset path
+      const String cvUrl = 'assets/pdf/Abir_Cherif_CV_2025.pdf';
+      await _launchUrl(cvUrl, context);
+    }
   }
 
   void _openCVInNewTab() async {
-    const String cvUrl =
-        'https://abir739.github.io/personal_website/assets/assets/pdf/Abir_Cherif_CV_2025.pdf';
-    await _launchUrl(cvUrl, context);
+    if (kIsWeb) {
+      // For web deployment, use the correct GitHub Pages URL
+      const String cvUrl =
+          'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf';
+      await _launchUrl(cvUrl, context);
+    } else {
+      // For mobile, use the asset path
+      const String cvUrl = 'assets/pdf/Abir_Cherif_CV_2025.pdf';
+      await _launchUrl(cvUrl, context);
+    }
+  }
+
+  void _openCVInViewer() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const PdfViewerPage(
+          assetPath: 'assets/pdf/Abir_Cherif_CV_2025.pdf',
+        ),
+      ),
+    );
   }
 
 //  method for downloading portfolio
@@ -110,7 +135,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.picture_as_pdf, color: Colors.white),
-            onPressed: () => _openCVInNewTab(),
+            onPressed: () => _openCVInViewer(),
             tooltip: 'View CV',
           ),
           IconButton(
@@ -283,7 +308,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                       child: SizedBox(
                                         width: double.infinity,
                                         child: ElevatedButton.icon(
-                                          onPressed: () => _openCVInNewTab(),
+                                          onPressed: () => _openCVInViewer(),
                                           icon: const Icon(Icons.visibility),
                                           label: const Text('View CV'),
                                         ),
@@ -307,7 +332,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                   children: [
                                     ElasticIn(
                                       child: ElevatedButton.icon(
-                                        onPressed: () => _openCVInNewTab(),
+                                        onPressed: () => _openCVInViewer(),
                                         icon: const Icon(Icons.visibility),
                                         label: const Text('View CV'),
                                       ),
@@ -714,9 +739,9 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                 child: SizedBox(
                                   width: double.infinity,
                                   child: ElevatedButton.icon(
-                                    onPressed: () => _openCVInNewTab(),
+                                    onPressed: () => _openCVInViewer(),
                                     icon: const Icon(Icons.download, size: 20),
-                                    label: const Text('Download CV'),
+                                    label: const Text('View CV'),
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.white,
                                       foregroundColor: Colors.blue.shade900,
@@ -760,9 +785,9 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                               const SizedBox(width: 12),
                               ElasticIn(
                                 child: ElevatedButton.icon(
-                                  onPressed: () => _openCVInNewTab(),
+                                  onPressed: () => _openCVInViewer(),
                                   icon: const Icon(Icons.download, size: 20),
-                                  label: const Text('Download CV'),
+                                  label: const Text('View CV'),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: Colors.white,
                                     foregroundColor: Colors.blue.shade900,
