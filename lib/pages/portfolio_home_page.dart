@@ -132,7 +132,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.picture_as_pdf, color: Colors.white),
-            onPressed: () => _openCVInNewTab(),
+            onPressed: () => _launchUrl('https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf', context),
             tooltip: 'View CV',
           ),
           IconButton(
@@ -305,7 +305,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                       child: SizedBox(
                                         width: double.infinity,
                                         child: ElevatedButton.icon(
-                                          onPressed: () => _openCVInViewer(),
+                                          onPressed: () =>  _launchUrl('https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf', context),
                                           icon: const Icon(Icons.visibility),
                                           label: const Text('View CV'),
                                         ),
@@ -329,7 +329,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                   children: [
                                     ElasticIn(
                                       child: ElevatedButton.icon(
-                                        onPressed: () => _openCVInViewer(),
+                                        onPressed: () =>  _launchUrl('https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf', context),
                                         icon: const Icon(Icons.visibility),
                                         label: const Text('View CV'),
                                       ),
@@ -736,7 +736,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                 child: SizedBox(
                                   width: double.infinity,
                                   child: ElevatedButton.icon(
-                                    onPressed: () => _openCVInViewer(),
+                                    onPressed: () =>  _launchUrl('https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf', context),
                                     icon: const Icon(Icons.download, size: 20),
                                     label: const Text('View CV'),
                                     style: ElevatedButton.styleFrom(
@@ -782,7 +782,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                               const SizedBox(width: 12),
                               ElasticIn(
                                 child: ElevatedButton.icon(
-                                  onPressed: () => _openCVInViewer(),
+                                  onPressed: () =>  _launchUrl('https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf', context),
                                   icon: const Icon(Icons.download, size: 20),
                                   label: const Text('View CV'),
                                   style: ElevatedButton.styleFrom(
