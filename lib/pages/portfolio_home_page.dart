@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:parallax_animation/parallax_animation.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:html' as html;
 
 class PortfolioHomePage extends StatefulWidget {
   const PortfolioHomePage({super.key});
@@ -47,39 +46,29 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     );
   }
 
-  void _downloadCV() {
-    if (kIsWeb) {
-      // For web - trigger download
-      const String cvUrl =
-          'https://abir739.github.io/personal_website/assets/assets/pdf/Abir_Cherif_CV_2025.pdf';
-      html.AnchorElement(href: cvUrl)
-        ..setAttribute('download', 'Abir_Cherif_CV_2025.pdf')
-        ..click();
-    } else {
-      // For mobile, show a message and open URL
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Opening CV in browser...')),
-      );
-      _launchUrl(
-          'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf',
-          context);
-    }
+  void _downloadCV() async {
+    const String cvUrl =
+        'https://abir739.github.io/personal_website/assets/assets/pdf/Abir_Cherif_CV_2025.pdf';
+    await _launchUrl(cvUrl, context);
+    // if (kIsWeb) {
+    //   // For web, try to trigger download using html
+    //   try {
+    //     html.AnchorElement(href: cvUrl)
+    //       ..setAttribute('download', 'Abir_Cherif_CV_2025.pdf')
+    //       ..click();
+    //   } catch (e) {
+    //     // Fallback to opening in new tab
+    //     await _launchUrl(cvUrl, context);
+    //   }
+    // } else {
+    //   await _launchUrl(cvUrl, context);
+    // }
   }
 
-  void _openCVInNewTab() {
-    if (kIsWeb) {
-      _launchUrl(
-          'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf',
-          context);
-      // // For web - open in new tab
-      // const String cvUrl = 'https://abir739.github.io/personal_website/assets/assets/pdf/Abir_Cherif_CV_2025.pdf';
-      // html.window.open(cvUrl, '_blank');
-    } else {
-      // For mobile, open CV in browser
-      _launchUrl(
-          'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf',
-          context);
-    }
+  void _openCVInNewTab() async {
+    const String cvUrl =
+        'https://abir739.github.io/personal_website/assets/assets/pdf/Abir_Cherif_CV_2025.pdf';
+    await _launchUrl(cvUrl, context);
   }
 
 //  method for downloading portfolio
