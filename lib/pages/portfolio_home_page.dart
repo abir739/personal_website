@@ -17,7 +17,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   final String githubUrl = 'https://github.com/abir739';
   final String linkedinUrl =
       'https://www.linkedin.com/in/abir-cherif-931770202/';
-  final String portfolioUrl = 'https://abir739.github.io/Portfolio';
+  final String portfolioUrl = 'https://abir739.github.io/personal_website';
   final String cvPath = "assets/pdf/Abir_Cherif_CV_2025.pdf";
   final ScrollController _scrollController = ScrollController();
 
@@ -56,7 +56,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
         const SnackBar(content: Text('Opening CV in browser...')),
       );
       _launchUrl(
-          'https://abir739.github.io/my_portfolio/assets/pdf/Abir_Cherif_CV_2025.pdf',
+          'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf',
           context);
     }
   }
@@ -67,7 +67,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     } else {
       // For mobile, open CV in browser
       _launchUrl(
-          'https://abir739.github.io/my_portfolio/assets/pdf/Abir_Cherif_CV_2025.pdf',
+          'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf',
           context);
     }
   }
