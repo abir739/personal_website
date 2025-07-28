@@ -70,51 +70,98 @@ class PdfViewerPage extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 32),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton.icon(
-                    onPressed: () async {
-                      if (kIsWeb) {
-                        const String cvUrl =
-                            'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf';
-                        await launchUrl(Uri.parse(cvUrl));
-                      } else {
-                        await launchUrl(
-                            Uri.parse('assets/pdf/Abir_Cherif_CV_2025.pdf'));
-                      }
-                    },
-                    icon: const Icon(Icons.visibility),
-                    label: const Text('View CV'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue.shade700,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 12),
+              MediaQuery.of(context).size.width < 600
+                  ? Column(
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () async {
+                            if (kIsWeb) {
+                              const String cvUrl =
+                                  'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf';
+                              await launchUrl(Uri.parse(cvUrl));
+                            } else {
+                              await launchUrl(Uri.parse(
+                                  'assets/pdf/Abir_Cherif_CV_2025.pdf'));
+                            }
+                          },
+                          icon: const Icon(Icons.visibility),
+                          label: const Text('View CV'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue.shade700,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 12),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            if (kIsWeb) {
+                              const String cvUrl =
+                                  'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf';
+                              final anchor = html.AnchorElement(href: cvUrl)
+                                ..setAttribute(
+                                    'download', 'Abir_Cherif_CV_2025.pdf')
+                                ..click();
+                            }
+                          },
+                          icon: const Icon(Icons.download),
+                          label: const Text('Download CV'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green.shade600,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 12),
+                          ),
+                        ),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () async {
+                            if (kIsWeb) {
+                              const String cvUrl =
+                                  'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf';
+                              await launchUrl(Uri.parse(cvUrl));
+                            } else {
+                              await launchUrl(Uri.parse(
+                                  'assets/pdf/Abir_Cherif_CV_2025.pdf'));
+                            }
+                          },
+                          icon: const Icon(Icons.visibility),
+                          label: const Text('View CV'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue.shade700,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 12),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            if (kIsWeb) {
+                              const String cvUrl =
+                                  'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf';
+                              final anchor = html.AnchorElement(href: cvUrl)
+                                ..setAttribute(
+                                    'download', 'Abir_Cherif_CV_2025.pdf')
+                                ..click();
+                            }
+                          },
+                          icon: const Icon(Icons.download),
+                          label: const Text('Download CV'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green.shade600,
+                            foregroundColor: Colors.white,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 24, vertical: 12),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(width: 16),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      if (kIsWeb) {
-                        const String cvUrl =
-                            'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf';
-                        final anchor = html.AnchorElement(href: cvUrl)
-                          ..setAttribute('download', 'Abir_Cherif_CV_2025.pdf')
-                          ..click();
-                      }
-                    },
-                    icon: const Icon(Icons.download),
-                    label: const Text('Download CV'),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green.shade600,
-                      foregroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 24, vertical: 12),
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
         ),

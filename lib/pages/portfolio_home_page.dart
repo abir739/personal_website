@@ -74,14 +74,11 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
   void _openCVInNewTab() async {
     if (kIsWeb) {
-      // For web deployment, use the correct GitHub Pages URL
       const String cvUrl =
           'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf';
-      await _launchUrl(cvUrl, context);
+      await launchUrl(Uri.parse(cvUrl));
     } else {
-      // For mobile, use the asset path
-      const String cvUrl = 'assets/pdf/Abir_Cherif_CV_2025.pdf';
-      await _launchUrl(cvUrl, context);
+      await launchUrl(Uri.parse('assets/pdf/Abir_Cherif_CV_2025.pdf'));
     }
   }
 
@@ -135,7 +132,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.picture_as_pdf, color: Colors.white),
-            onPressed: () => _openCVInViewer(),
+            onPressed: () => _openCVInNewTab(),
             tooltip: 'View CV',
           ),
           IconButton(
