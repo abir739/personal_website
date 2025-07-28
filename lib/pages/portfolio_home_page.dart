@@ -6,7 +6,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:parallax_animation/parallax_animation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:html' as html;
-import 'dart:developer' as developer;
 
 class PortfolioHomePage extends StatefulWidget {
   const PortfolioHomePage({super.key});
@@ -49,22 +48,14 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   }
 
   void _downloadCV() {
-  if (kIsWeb) {
-    final String cvUrl = 'assets/assets/pdf/Abir_Cherif_CV_2025.pdf';
-    developer.log('Attempting to download CV from: $cvUrl');
-    
-    try {
+    if (kIsWeb) {
+      // For web - trigger download
+      const String cvUrl =
+          'https://abir739.github.io/personal_website/assets/assets/pdf/Abir_Cherif_CV_2025.pdf';
       html.AnchorElement(href: cvUrl)
         ..setAttribute('download', 'Abir_Cherif_CV_2025.pdf')
         ..click();
-      developer.log('Download triggered successfully');
-    } catch (e) {
-      developer.log('Download failed: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Download failed: $e')),
-      );
-    }
-  } else {
+    } else {
       // For mobile, show a message and open URL
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Opening CV in browser...')),
@@ -76,20 +67,14 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   }
 
   void _openCVInNewTab() {
-  if (kIsWeb) {
-    const String cvUrl = 'assets/assets/pdf/Abir_Cherif_CV_2025.pdf';
-    developer.log('Attempting to open CV from: $cvUrl');
-    
-    try {
-      html.window.open(cvUrl, '_blank');
-      developer.log('CV opened successfully');
-    } catch (e) {
-      developer.log('Open failed: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to open CV: $e')),
-      );
-    }
-  }else {
+    if (kIsWeb) {
+      _launchUrl(
+          'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf',
+          context);
+      // // For web - open in new tab
+      // const String cvUrl = 'https://abir739.github.io/personal_website/assets/assets/pdf/Abir_Cherif_CV_2025.pdf';
+      // html.window.open(cvUrl, '_blank');
+    } else {
       // For mobile, open CV in browser
       _launchUrl(
           'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf',
@@ -100,6 +85,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 //  method for downloading portfolio
   void _downloadPortfolio() {
     if (kIsWeb) {
+      // You can either:
       // 1. Show a message that it's not available
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
