@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:parallax_animation/parallax_animation.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:html' as html;
 
 class PortfolioHomePage extends StatefulWidget {
   const PortfolioHomePage({super.key});
@@ -48,8 +49,11 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
   void _downloadCV() {
     if (kIsWeb) {
-      // For web deployment, use the full URL path to your PDF
-      // Web-specific code will be handled separately
+      // For web - trigger download
+      final String cvUrl = 'assets/pdf/Abir_Cherif_CV_2025.pdf';
+      html.AnchorElement(href: cvUrl)
+        ..setAttribute('download', 'Abir_Cherif_CV_2025.pdf')
+        ..click();
     } else {
       // For mobile, show a message and open URL
       ScaffoldMessenger.of(context).showSnackBar(
@@ -63,7 +67,9 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
   void _openCVInNewTab() {
     if (kIsWeb) {
-
+      // For web - open in new tab
+      final String cvUrl = 'assets/pdf/Abir_Cherif_CV_2025.pdf';
+      html.window.open(cvUrl, '_blank');
     } else {
       // For mobile, open CV in browser
       _launchUrl(
@@ -75,6 +81,17 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 //  method for downloading portfolio
   void _downloadPortfolio() {
     if (kIsWeb) {
+      // You can either:
+      // 1. Show a message that it's not available
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+              'Portfolio is already displayed on this website. Use "Download CV" instead.'),
+        ),
+      );
+
+      // 2. Or redirect to CV download
+      // _downloadCV();
     } else {
       // For mobile, show a message
       ScaffoldMessenger.of(context).showSnackBar(
