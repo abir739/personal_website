@@ -50,7 +50,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   void _downloadCV() {
     if (kIsWeb) {
       // For web - trigger download
-     const String cvUrl = 'https://abir739.github.io/personal_website/assets/assets/pdf/Abir_Cherif_CV_2025.pdf';
+     const String cvUrl = 'assets/pdf/Abir_Cherif_CV_2025.pdf';
       html.AnchorElement(href: cvUrl)
         ..setAttribute('download', 'Abir_Cherif_CV_2025.pdf')
         ..click();
@@ -68,7 +68,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   void _openCVInNewTab() {
     if (kIsWeb) {
       // For web - open in new tab
-      const String cvUrl = 'https://abir739.github.io/personal_website/assets/assets/pdf/Abir_Cherif_CV_2025.pdf';
+      const String cvUrl = 'assets/pdf/Abir_Cherif_CV_2025.pdf';
       html.window.open(cvUrl, '_blank');
     } else {
       // For mobile, open CV in browser
@@ -81,7 +81,6 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 //  method for downloading portfolio
   void _downloadPortfolio() {
     if (kIsWeb) {
-      // You can either:
       // 1. Show a message that it's not available
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
