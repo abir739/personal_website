@@ -17,7 +17,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   final String githubUrl = 'https://github.com/abir739';
   final String linkedinUrl =
       'https://www.linkedin.com/in/abir-cherif-931770202/';
-  final String portfolioUrl = 'https://abir739.github.io/personal_website';
+  final String portfolioUrl = 'https://abir739.github.io/personal_website/';
   final String cvPath = "assets/pdf/Abir_Cherif_CV_2025.pdf";
   final ScrollController _scrollController = ScrollController();
 
