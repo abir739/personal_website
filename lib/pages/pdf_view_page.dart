@@ -29,7 +29,7 @@ class PdfViewerPage extends StatelessWidget {
             onPressed: () {
               // Trigger download
               if (kIsWeb) {
-                final url =
+                const url =
                     'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf';
                 final anchor = html.AnchorElement(href: url)
                   ..setAttribute('download', 'Abir_Cherif_CV_2025.pdf')
