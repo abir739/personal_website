@@ -5,10 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:parallax_animation/parallax_animation.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'pdf_view_page.dart';
-
-// Web-specific imports
-import 'dart:html' as html;
 
 class PortfolioHomePage extends StatefulWidget {
   const PortfolioHomePage({super.key});
@@ -28,18 +24,75 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   Future<void> _launchUrl(String url, BuildContext context) async {
     final Uri uri = Uri.parse(url);
     try {
+      // Check if URL can be launched
       if (await canLaunchUrl(uri)) {
-        await launchUrl(uri, mode: LaunchMode.externalApplication);
+        // Try to launch with external application mode first
+        try {
+          await launchUrl(
+            uri,
+            mode: LaunchMode.externalApplication,
+          );
+        } catch (e) {
+          // If external fails, try in-app web view
+          try {
+            await launchUrl(
+              uri,
+              mode: LaunchMode.inAppWebView,
+              webViewConfiguration: const WebViewConfiguration(
+                enableJavaScript: true,
+                enableDomStorage: true,
+              ),
+            );
+          } catch (e) {
+            // If in-app fails, try platform default
+            await launchUrl(uri);
+          }
+        }
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not launch URL')),
-        );
+        // If canLaunchUrl returns false, try alternative approaches
+        bool launched = false;
+
+        // Try different launch modes
+        final List<LaunchMode> modes = [
+          LaunchMode.externalApplication,
+          LaunchMode.inAppWebView,
+          LaunchMode.platformDefault,
+        ];
+
+        for (LaunchMode mode in modes) {
+          try {
+            await launchUrl(uri, mode: mode);
+            launched = true;
+            break;
+          } catch (e) {
+            continue;
+          }
+        }
+
+        if (!launched) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Could not launch URL: $url'),
+              duration: const Duration(seconds: 3),
+            ),
+          );
+        }
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error launching URL: $e')),
+        SnackBar(
+          content: Text('Error launching URL: $e'),
+          duration: const Duration(seconds: 3),
+        ),
       );
     }
+  }
+
+  void _openCVInNewTab() async {
+    const String cvUrl =
+        'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf';
+
+    await _launchUrl(cvUrl, context);
   }
 
   void _scrollToSection(double position) {
@@ -51,53 +104,33 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   }
 
   void _downloadCV() async {
+    const String cvUrl =
+        'https://raw.githubusercontent.com/abir739/personal_website/gh-pages/assets/pdf/Abir_Cherif_CV_2025.pdf';
+
     if (kIsWeb) {
-      // For web deployment, use the correct GitHub Pages URL
-      const String cvUrl =
-          'https://raw.githubusercontent.com/abir739/personal_website/gh-pages/assets/pdf/Abir_Cherif_CV_2025.pdf';
-
-      try {
-        // Try to trigger download using html
-        final anchor = html.AnchorElement(href: cvUrl)
-          ..setAttribute('download', 'Abir_Cherif_CV_2025.pdf')
-          ..click();
-      } catch (e) {
-        // Fallback to opening in new tab
-        await _launchUrl(cvUrl, context);
-      }
-    } else {
-      // For mobile, use the asset path
-      const String cvUrl = 'assets/pdf/Abir_Cherif_CV_2025.pdf';
-      await _launchUrl(cvUrl, context);
-    }
-  }
-
-  void _openCVInNewTab() async {
-    if (kIsWeb) {
-      const String cvUrl =
-          'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf';
-      await launchUrl(Uri.parse(cvUrl));
-    } else {
-      await launchUrl(Uri.parse('assets/pdf/Abir_Cherif_CV_2025.pdf'));
-    }
-  }
-
-  void _openCVInViewer() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const PdfViewerPage(
-          assetPath: 'assets/pdf/Abir_Cherif_CV_2025.pdf',
+      // For web, show a message about downloading
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+              'Opening CV in new tab. Right-click and "Save as" to download.'),
+          duration: Duration(seconds: 3),
         ),
-      ),
-    );
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Opening CV in browser...'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+
+    await _launchUrl(cvUrl, context);
   }
 
 //  method for downloading portfolio
   void _downloadPortfolio() {
     if (kIsWeb) {
-      // You can either:
-      // 1. Show a message that it's not available
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
@@ -105,7 +138,6 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
         ),
       );
 
-      // 2. Or redirect to CV download
       // _downloadCV();
     } else {
       // For mobile, show a message
@@ -132,7 +164,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.picture_as_pdf, color: Colors.white),
-            onPressed: () => _launchUrl('https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf', context),
+            onPressed: () => _openCVInNewTab(),
             tooltip: 'View CV',
           ),
           IconButton(
@@ -305,7 +337,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                       child: SizedBox(
                                         width: double.infinity,
                                         child: ElevatedButton.icon(
-                                          onPressed: () =>  _launchUrl('https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf', context),
+                                          onPressed: () => _openCVInNewTab(),
                                           icon: const Icon(Icons.visibility),
                                           label: const Text('View CV'),
                                         ),
@@ -329,7 +361,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                   children: [
                                     ElasticIn(
                                       child: ElevatedButton.icon(
-                                        onPressed: () =>  _launchUrl('https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf', context),
+                                        onPressed: () => _openCVInNewTab(),
                                         icon: const Icon(Icons.visibility),
                                         label: const Text('View CV'),
                                       ),
@@ -736,7 +768,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                                 child: SizedBox(
                                   width: double.infinity,
                                   child: ElevatedButton.icon(
-                                    onPressed: () =>  _launchUrl('https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf', context),
+                                    onPressed: () => _openCVInNewTab(),
                                     icon: const Icon(Icons.download, size: 20),
                                     label: const Text('View CV'),
                                     style: ElevatedButton.styleFrom(
@@ -782,7 +814,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                               const SizedBox(width: 12),
                               ElasticIn(
                                 child: ElevatedButton.icon(
-                                  onPressed: () =>  _launchUrl('https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf', context),
+                                  onPressed: () => _openCVInNewTab(),
                                   icon: const Icon(Icons.download, size: 20),
                                   label: const Text('View CV'),
                                   style: ElevatedButton.styleFrom(
