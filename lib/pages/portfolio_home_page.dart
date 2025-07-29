@@ -54,7 +54,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     if (kIsWeb) {
       // For web deployment, use the correct GitHub Pages URL
       const String cvUrl =
-          'https://abir739.github.io/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf';
+          'https://raw.githubusercontent.com/abir739/personal_website/gh-pages/assets/pdf/Abir_Cherif_CV_2025.pdf';
 
       try {
         // Try to trigger download using html
@@ -451,15 +451,15 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     ),
                     const SizedBox(height: 12),
                     _buildEducationCard(
-                      'Bachelor\'s Degree in Computer Engineering',
-                      'École Nationale des Sciences de l\'Informatique (ENSI), Manouba, Tunisia',
-                      'Jan 2020 - Jan 2023',
+                      'Diploma: Computer Engineering (equivalent to Master’s Degree – EQF Level 7)',
+                      '🏫 National Engineering School of Computer Science (ENSI), Manouba, Tunisia',
+                      'Sep. 2020 – Jul. 2023',
                     ),
                     const SizedBox(height: 16),
                     _buildEducationCard(
-                      'Degree in Mathematics and Applications',
-                      'Higher Institute of Computer Science and Mathematics (ISIMM), Monastir, Tunisia',
-                      'Jan 2017 - Jan 2020',
+                      'Bachelor’s Degree in Mathematics and Applications',
+                      '🏫 Higher Institute of Computer Science and Mathematics of Monastir(ISIMM), Tunisia',
+                      'Sep. 2017 – Jul. 2020',
                     ),
                   ],
                 ),
