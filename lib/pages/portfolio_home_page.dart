@@ -105,7 +105,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
 
   void _downloadCV() async {
     const String cvUrl =
-        'https://raw.githubusercontent.com/abir739/personal_website/gh-pages/assets/pdf/Abir_Cherif_CV_2025.pdf';
+        'https://raw.githubusercontent.com/abir739/personal_website/assets/pdf/Abir_Cherif_CV_2025.pdf';
 
     if (kIsWeb) {
       // For web, show a message about downloading
