@@ -401,7 +401,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                     ),
                     const SizedBox(height: 12),
                     Text(
-                      'Dynamic and passionate Mobile Developer with over two years of experience building scalable web and mobile applications. Expert in Flutter, Dart, JavaScript, and Firebase, with a proven track record of delivering a trip management app that reduced organization time by 30%. Skilled in Agile methodologies and CI/CD pipelines, seeking to contribute to innovative projects in Europe.',
+                      'Dynamic and passionate Mobile Developer with over two years of experience building scalable Android and iOS applications. I specialize in developing clean UI/UX, scalable code, and feature-rich apps using Flutter and Dart.',
                       style: GoogleFonts.poppins(
                         fontSize: 16,
                         color: Colors.grey.shade800,
